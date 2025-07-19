@@ -8,6 +8,8 @@ class ShopPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+
       appBar: AppBar(
         title: Text('Shop Page'),
         backgroundColor: Colors.transparent,
@@ -16,7 +18,7 @@ class ShopPage extends StatelessWidget {
         elevation: 0,
       ),
 
-      drawer: MyDrawer(),
+      drawer: const MyDrawer(),
     );
   }
 }
