@@ -1,87 +1,101 @@
 import 'package:flutter/material.dart';
-import 'package:sneaker_shop_app/components/bottom_nav_bar.dart';
-import 'package:sneaker_shop_app/pages/cart_page.dart';
-import 'package:sneaker_shop_app/pages/shop_page.dart';
+import 'package:provider/provider.dart';
+import 'package:sneaker_shop_app/components/shoe_title.dart';
+import 'package:sneaker_shop_app/models/cart.dart';
+import 'package:sneaker_shop_app/models/shoe.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ShopPage extends StatefulWidget {
+  ShopPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ShopPage> createState() => _ShopPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
+class _ShopPageState extends State<ShopPage> {
+  // add shoe to cart
 
-  void navigateBottomBar(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  void addShoeToCart(Shoe shoe) {
+    Provider.of<Cart>(context, listen: false).addToCart(shoe);
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Successfully added to cart'),
+        content: Text('Check your cart'),
+      ),
+    );
   }
-
-  final List<Widget> _pages = [ShopPage(), CartPage()];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          ),
-        ),
-      ),
-      drawer: Drawer(
-        backgroundColor: Colors.grey.shade900,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
+    return Consumer<Cart>(
+      builder: (context, value, child) => Column(
+        children: [
+          SizedBox(height: 15),
+          Container(
+            padding: EdgeInsets.all(12),
+            margin: EdgeInsets.symmetric(horizontal: 25),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade200,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  padding: EdgeInsets.all(20.0),
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    "assets/images/nike_logo.png",
-                    color: Colors.white,
-                    height: 150,
-                    width: 200,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Divider(color: Colors.grey.shade800),
-                ),
-                SizedBox(height: 30),
+                Text('Search', style: TextStyle(color: Colors.grey)),
+                Icon(Icons.search, color: Colors.grey),
+              ],
+            ),
+          ),
 
-                ListTile(
-                  leading: Icon(Icons.home, color: Colors.white),
-                  title: Text('Home', style: TextStyle(color: Colors.white)),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 25.0),
+            child: Text(
+              'everyone flies.. some fly longer than others',
+              style: TextStyle(color: Colors.grey.shade600),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  'Hot Picks 🔥',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                ListTile(
-                  leading: Icon(Icons.info, color: Colors.white),
-                  title: Text('About', style: TextStyle(color: Colors.white)),
+                Text(
+                  'See all',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                    fontSize: 16,
+                  ),
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: ListTile(
-                leading: Icon(Icons.logout, color: Colors.white),
-                title: Text('Logout', style: TextStyle(color: Colors.white)),
-              ),
+          ),
+
+          SizedBox(height: 15),
+
+          Expanded(
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: value.getShoeList().length,
+              itemBuilder: (context, index) {
+                Shoe shoe = value.getShoeList()[index];
+                return ShoeTittle(shoe: shoe, onTap: () => addShoeToCart(shoe));
+              },
             ),
-          ],
-        ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(top: 25.0, left: 25.0, right: 25.0),
+            child: Divider(color: Colors.grey.shade300),
+          ),
+        ],
       ),
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: MyBottomNavBar(onTabChange: navigateBottomBar),
     );
   }
 }

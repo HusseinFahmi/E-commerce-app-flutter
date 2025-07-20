@@ -3,9 +3,17 @@ import 'package:ecommerce_app/pages/intro_page.dart';
 import 'package:ecommerce_app/pages/shop_page.dart';
 import 'package:ecommerce_app/themes/light_mode.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'models/shop.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+      ChangeNotifierProvider(
+        create: (context) => Shop(),
+        child: MyApp(),
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {
