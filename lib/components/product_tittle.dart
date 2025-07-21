@@ -3,40 +3,25 @@ import 'package:provider/provider.dart';
 
 import '../models/product.dart';
 import '../models/shop.dart';
+import 'dialog_box.dart';
 
 class MyProductTittle extends StatelessWidget {
   final Product product;
 
   MyProductTittle({super.key, required this.product});
 
-  void addTocart(BuildContext context) {
+  void addToCart(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        content: Text(
-          'add this item to your cart? ',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              MaterialButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text('No'),
-              ),
-              MaterialButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  context.read<Shop>().addToCart(product);
-                },
-                child: Text('Yes'),
-              ),
-            ],
-          ),
-        ],
+      builder: (context) => DialogBox(
+        dialogMessage: 'Add this item to your cart?',
+        onCancel: () => Navigator.pop(context),
+        cancelLabel: 'No',
+        onConfirm: () {
+          Navigator.pop(context);
+          context.read<Shop>().addToCart(product);
+        },
+        confirmLabel: 'Yes',
       ),
     );
   }
@@ -69,7 +54,7 @@ class MyProductTittle extends StatelessWidget {
                   ),
                   width: double.infinity,
                   padding: EdgeInsets.all(25),
-                  child: Icon(Icons.favorite),
+                  child: Image.asset(product.imageUrl),
                 ),
               ),
 
@@ -101,7 +86,7 @@ class MyProductTittle extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: IconButton(
-                  onPressed: () => addTocart(context),
+                  onPressed: () => addToCart(context),
                   icon: Icon(Icons.add),
                 ),
               ),
