@@ -26,22 +26,20 @@ class ShopPage extends StatelessWidget {
             onPressed: () => Navigator.pushNamed(context, 'cart_page'),
             icon: Icon(Icons.shopping_cart),
           ),
-        ),
+        ],
+      ),
 
       drawer: const MyDrawer(),
 
       body: ListView(
         children: [
-          SizedBox(height: 25,),
+          SizedBox(height: 25),
           // shop tittle
           Center(
             child: Text(
               'Pick a from a selected list of products',
               style: TextStyle(
-                color: Theme
-                    .of(context)
-                    .colorScheme
-                    .inversePrimary,
+                color: Theme.of(context).colorScheme.inversePrimary,
               ),
             ),
           ),
@@ -63,21 +61,18 @@ class ShopPage extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: 40,),
+          SizedBox(height: 40),
 
           Center(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
                 'Thank you for shopping with us\n'
-                    'We hope to see you again soon\n'
-                    'Eng. H U S S E I N',
+                'We hope to see you again soon\n'
+                'Eng. H U S S E I N',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Theme
-                      .of(context)
-                      .colorScheme
-                      .inversePrimary,
+                  color: Theme.of(context).colorScheme.inversePrimary,
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                   height: 1.5,
@@ -86,7 +81,6 @@ class ShopPage extends StatelessWidget {
               ),
             ),
           ),
-
         ],
       ),
     );
