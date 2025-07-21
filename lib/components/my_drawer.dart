@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/components/list_tittle.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -10,13 +11,41 @@ class MyDrawer extends StatelessWidget {
 
       child: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            DrawerHeader(
-              child: Icon(
-                Icons.shopping_bag,
-                size: 72,
-                color: Theme.of(context).colorScheme.inversePrimary,
-              ),
+            Column(
+              children: [
+                DrawerHeader(
+                  child: Icon(
+                    Icons.shopping_bag,
+                    size: 72,
+                    color: Theme
+                        .of(context)
+                        .colorScheme
+                        .inversePrimary,
+                  ),
+                ),
+
+                SizedBox(height: 25),
+
+                MyListTittle(text: 'shop',
+                  icon: Icons.home,
+                  onTap: () => Navigator.pop(context),),
+                MyListTittle(text: 'Cart', icon: Icons.shopping_cart,
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, 'cart_page');
+                    })
+              ],
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: MyListTittle(text: 'Exit',
+                icon: Icons.logout,
+                onTap: () =>
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, 'intro_page', (route) => false),),
             ),
           ],
         ),
