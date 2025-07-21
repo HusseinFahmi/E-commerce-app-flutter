@@ -5,9 +5,14 @@ import 'package:provider/provider.dart';
 import '../components/my_drawer.dart';
 import '../models/shop.dart';
 
-class ShopPage extends StatelessWidget {
+class ShopPage extends StatefulWidget {
   const ShopPage({super.key});
 
+  @override
+  State<ShopPage> createState() => _ShopPageState();
+}
+
+class _ShopPageState extends State<ShopPage> {
   @override
   Widget build(BuildContext context) {
     final products = context.watch<Shop>().shop;
