@@ -10,9 +10,7 @@ class ShopPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final products = context
-        .watch<Shop>()
-        .shop;
+    final products = context.watch<Shop>().shop;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
 
@@ -22,7 +20,13 @@ class ShopPage extends StatelessWidget {
         foregroundColor: Theme.of(context).colorScheme.inversePrimary,
         centerTitle: true,
         elevation: 0,
-      ),
+
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.pushNamed(context, 'cart_page'),
+            icon: Icon(Icons.shopping_cart),
+          ),
+        ),
 
       drawer: const MyDrawer(),
 
@@ -58,6 +62,31 @@ class ShopPage extends StatelessWidget {
               },
             ),
           ),
+
+          SizedBox(height: 40,),
+
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                'Thank you for shopping with us\n'
+                    'We hope to see you again soon\n'
+                    'Eng. H U S S E I N',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Theme
+                      .of(context)
+                      .colorScheme
+                      .inversePrimary,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  height: 1.5,
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ),
+          ),
+
         ],
       ),
     );
